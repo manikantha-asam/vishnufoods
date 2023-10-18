@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VISHNU FOODS</title>
+    <style>
+        body {
+            background-image: url("https://cdn.glitch.global/6d99742c-7c57-412a-b709-7351019f4af6/IMG_20231008_154226_286~2.jpg?v=1696760028979");
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-position: center;
+            transition: background-image 2s ease-in-out;
+        }
+
+        .content h1 {
+            font-size: 70px;
+            font-weight: bolder;
+            color: aliceblue;
+        }
+
+        .content {
+            margin-bottom: 10%;
+        }
+
+        .content p {
+            font-size: 40px;
+            color: antiquewhite;
+        }
+
+        *,
+        *:after {
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "poppins", sans-serif;
+            font-size: 60px;
+            font-weight: 500px;
+        }
+
+        .wrapper {
+            box-sizing: content-box;
+            height: 70px;
+            padding: 50px 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        span {
+            display: block;
+            height: 100%;
+            padding-left: 10px;
+            color: red;
+            animation: spin_words 7s infinite ease;
+            font-size: 40px;
+        }
+
+        @keyframes spin_words {
+            0% {
+                transform: translateY(0%);
+            }
+            25% {
+                transform: translateY(-100%);
+            }
+            50% {
+                transform: translateY(-200%);
+            }
+            75% {
+                transform: translateY(-300%);
+            }
+            100% {
+                transform: translateY(-400%);
+            }
+        }
+        
+
+/* Add animation to change color every 2 seconds */
+@keyframes changeColor {
+    0% {
+        color: red;
+        font-weight: bold;
+    }
+    25% {
+        color: blue;
+        font-weight: bold;
+    }
+    50% {
+        color: green;
+        font-weight: bold;
+    }
+    75% {
+        color: orange;
+        font-weight: bold;
+    }
+    100% {
+        color: pink;
+        font-weight: bold;
+    }
+}
+
+h1.resname {
+    font-size: 80px;
+    animation: changeColor 2s linear infinite;
+}
+
+        .words {
+            overflow: hidden;
+            font-weight: bold;
+        }
+
+        .wrapper p {
+            color: aliceblue;
+            font-size: 40px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10%;
+            margin-top: auto;
+            margin-bottom: auto;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 2% 3% 2% 3%;
+            font-size: 20px;
+            background-color: goldenrod;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ed6b14;
+        }
+
+        .resname {
+            color: aliceblue;
+            font-size: 80px;
+        }
+
+        .resbio {
+            color: antiquewhite;
+            font-size: 40px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="resname">VISHNU FOODS</h1> <br>
+    <p class="resbio">Preorder Food Items And Save Your Time</p>
+
+    <div class="wrapper">
+        <p> Let's Order In </p>
+        <div class="words">
+            <span>LAKE VIEW FOOD COURT</span>
+            <span>TEA LEAF</span>
+            <span>AMUL ICE CREAMS</span>
+            <span>MAGGIE</span>
+            <span>TANDOORI</span>
+        </div>
+    </div>
+    <button class="btn" onclick="menu()" style="font-size: 20px; float: right;">Let's Dive</button>
+</div>
+<script>
+    function menu() {
+        location.href = "/login";
+    }
+    function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+    // Array of background images
+    var backgroundImages = [
+       "https://cdn.glitch.global/6d99742c-7c57-412a-b709-7351019f4af6/IMG_20231008_154226_286~2.jpg?v=1696760028979",
+        "https://cdn.glitch.global/00e523c4-bffd-43b7-ba18-37017d26b26a/Snapchat-1574084616.jpg?v=1696686188204", 
+        "https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Snapchat-1542396768.jpg?v=1696514786177",
+        "https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Snapchat-90585956.jpg?v=1696514192255",
+        "https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Snapchat-1283257034.jpg?v=1696515045920"
+    ];
+
+    var currentImageIndex = 0;
+
+    // Function to change the background image
+    function changeBackgroundImage() {
+        document.body.style.backgroundImage = "url('" + backgroundImages[currentImageIndex] + "')";
+        currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+        setTimeout(changeBackgroundImage, 2000); 
+    }
+
+    // Start the background image rotation
+    changeBackgroundImage();
+</script>
+</body>
+</html>

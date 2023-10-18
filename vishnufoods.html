@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishnu Food Court</title>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <script>
+        // Initialize Firebase with your Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaEioKIct6de9ZzMizgko9aBKkZ6rhuD0",
+            authDomain: "vishnufoods-56927.firebaseapp.com",
+            databaseURL: "https://vishnufoods-56927-default-rtdb.firebaseio.com/",
+            projectId: "vishnufoods-56927",
+            storageBucket: "vishnufoods-56927.appspot.com",
+            messagingSenderId: "101284934777",
+            appId: "1:1012849347774:web:6c45e2e294c97c8f6c22ef"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+    </script>
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .biri {
+            margin: 10px;
+            padding: 20px; 
+            background-color: #fff;
+            border-radius: 10px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+            transition: transform 0.2s;
+            max-width: 300px;
+            
+           
+        }
+        .biri:hover {
+            transform: scale(1.05); 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); 
+        }
+
+
+        .banner {
+            background-color: #f5f5f5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo img {
+            width: 150px;
+            cursor: pointer;
+            margin-right: 300px;
+        }
+        
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar ul li {
+            margin-left: 20px;
+        }
+        
+        .navbar ul li a {
+            text-decoration: none;
+            text-transform: uppercase;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        .navbar ul li a:hover {
+            background-color: #ddd;
+        }
+        
+       
+        
+        .biri img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        
+        .details {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .details h5 {
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        .details .price {
+            color: #e91e63;
+        }
+        
+        .details button {
+            padding: 8px 15px;
+            background-color: #e91e63;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 12px;
+        }
+        
+        .details button:hover {
+            background-color: #c2185b;
+        }
+
+        
+   
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  gap: 10px;
+  box-shadow: inset 5px 128px 52px -7px rgba(0, 0, 0, 0.54);
+}
+
+        #cart-container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: #c2185b;
+            background-color:dimgrey;
+            width: 20%;
+            color: white;
+            margin: auto;
+            padding: 10px;
+            border-radius: 10px;
+            font-size:large;
+            line-height: 2em;
+            font-family:'Oswald', sans-serif ;
+          
+        }
+        
+        .logo{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: inherit;
+        }
+        .outlet {
+  font-family: 'Oswald', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  
+}
+
+.location{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+}
+.location a {
+    text-decoration: none;
+    color: black;
+}.outlet {
+  font-family: 'Oswald', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
+  box-shadow: inset 5px 0px 20px -12px rgba(0, 0, 0, 0.75);
+  
+}
+
+.outlet h5{
+    font-size: 50px;
+}
+.omg{
+    margin: 10px;
+     padding: 10px;
+    background-color: #fff;
+     border-radius: 5px;
+    box-shadow: 31px 29px 15px -3px rgba(234, 124, 164, 0.108);
+    max-width: 290px;
+    
+ }
+ .omg:hover {
+            transform: scale(1.05); 
+            box-shadow: 0 6px 15px rgba(229, 71, 9, 0.9); 
+        }
+.omg a{
+    float: right;
+}
+.omg a img{
+    width: 100%;
+}
+.con {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #f6b4ca;
+  color: black;
+  box-shadow: inset 5px 0px 52px -12px rgba(0, 0, 0, 0.75);
+}
+  .gif{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    }
+    .gif p a{
+      margin-left: 20px;
+    }
+  .checkout{
+    padding: 8px 15px;
+            background-color: #e91e63;
+            color: #fff;
+            border: none;
+            border-radius: 15px 0px 15px 0;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 12px;
+            height: 50px;
+  }
+  .blending {
+    mix-blend-mode: multiply;
+  }
+   #cartsymbol{
+     font-size: 32px; 
+  height: 40px;
+   }
+   
+   .contain{
+    background-color: white;
+   }
+   .cart{
+    background-color: white;
+   }
+   .fixed-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+   border-radius: 50px;
+  
+   align-items: center;
+   margin-left: 70%;
+
+}
+
+.view-cart-button {
+  padding: 20px 20px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.2s;
+}
+
+.view-cart-button:hover {
+  background-color: #27ae60;
+}
+#username, #mobilenumber {
+    display: block;
+    margin: 0 auto;
+    width: 20%; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#cart-container {
+    margin-top: 20px;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="contain">
+        <div class="banner">
+            <div class="logo">
+                <img class="blending" src="https://www.targetadmission.com/img/logos/2541139805.png" height="120px" alt="Vishnu Foods">
+                <p style="font-size:28px;"><b>Welcome to Vishnu Foodies!</b></p><br>
+            </div>
+            <div class="navbar">
+                <ul>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#outlets">Outlets</a></li>
+                    <li><a href="#contacts">Contact</a></li>
+                    <li><a id="cartsymbol" href="/myorders">🛒</a></li>
+					<li><a href="/home">LogOut</a> </li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        <!-- Grid layout for items -->
+        <section id="menu">
+        
+            <div class="nvcourse">
+                <h1><center><h3>Lake View Food Court</h3> 🧾MENU🍴</center></h1>
+            <!-- First Item -->
+            <div class="container">
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/30_Idly-1200x900.jpg?v=1696520566211" alt="IDLY">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>IDLY</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                    <button id="p2" onclick="addToCart('IDLY', 40)">Add To Cart</button>
+                </div>
+            </div>
+            
+           
+        <!-- Second Item -->
+        <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/images%20(1).jpeg?v=1696520566211" alt="MYSORE BONDA">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>MYSORE BONDA</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                    <button id="p2" onclick="addToCart('MYSORE BONDA', 40)">Add To Cart</button>
+                </div>
+        </div>
+    
+        <!-- Third Item -->
+        <div class="biri">
+            <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/dosa-recipe.jpg?v=1696520016042" alt="DOSA">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>DOSA</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                        <button id="p2" onclick="addToCart('DOSA', 40)">Add To Cart</button>
+                </div>
+        </div>
+    
+        <!-- Fourth Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/indian-street-foods-whole-wheat-chapati-chapathi-generative-ai-indian-street-foods-whole-wheat-chapati-chapathi-281271697.jpg?v=1696520569493" alt="CHAPATHI">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>CHAPATHI</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                        <button id="p2" onclick="addToCart('CHAPATHI', 40)">Add To Cart</button>
+                </div>
+             </div>
+    
+        <!-- Fifth Item -->
+            <div class="biri">
+                <img src="https://www.thecookierookie.com/wp-content/uploads/2023/04/featured-stovetop-burgers-recipe.jpg" alt="BURGER">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>BURGER</h5>
+                            <h5 class="price">160/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('BURGER', 160)">Add To Cart</button>
+                    </div>
+            </div>
+    
+    
+        <!-- sixth Item -->
+            <div class="biri">
+                <img src="https://bakerbettie.com/wp-content/uploads/2014/09/homemade-pan-pizza-crispy-crust-square-480x480.jpg" alt="CHICKEN PIZZA">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>CHICKEN PIZZA</h5>
+                            <h5 class="price">190/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('CHICKEN PIZZA', 190)">Add To Cart</button>
+                    </div>
+            </div>
+    
+        <!-- seventh Item -->
+            <div class="biri">
+                <img src="https://www.tasteofhome.com/wp-content/uploads/2018/01/Dilly-Chicken-Sandwiches_EXPS_SDJJ19_12096_E02_05_12b.jpg" alt="CHICKEN SANDWICH">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>CHICKEN SANDWICH<h5>
+                            <h5 class="price">160/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('CHICKEN SANDWICH', 160)">Add To Cart</button>
+                    </div>
+            </div>
+    
+        <!-- Eighth Item -->
+            <div class="biri">
+                <img src="https://1.bp.blogspot.com/-JGYgPx5va34/XfasA_3Hj-I/AAAAAAAAPVU/yJRaf9W9gp8FZ4_7SZQkbIg8txpjd1-qwCNcBGAsYHQ/s1600/Chicken_Kabab.JPG" alt="CHICKEN KABAB">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>CHICKEN KABAB</h5>
+                            <h5 class="price">180/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('CHICKEN KABAB', 180)">Add To Cart</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+        <div class="vegcourse">
+            <h1><center><h3> Tea Leaf</h3> 🧾MENU🍴</center></h1>
+            <div class="container">
+        <!-- Ninth Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/6f95408e-e4e2-4c49-a162-7acf13a72a0f/tea.jpg?v=1696928337616" alt="DUM TEA">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>DUM TEA</h5>
+                            <h5 class="price">10/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('DUM TEA', 10)">Add To Cart</button>
+                    </div>
+            </div>
+             <!-- Tenth Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/6f95408e-e4e2-4c49-a162-7acf13a72a0f/badam-kesar-green-tea.jpg?v=1696927851028" alt="BADAM TEA">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>BADAM TEA</h5>
+                        <h5 class="price">20/-</h5>
+                    </div>
+                    <button id="p2" onclick="addToCart('BADAM TEA', 20)">Add To Cart</button>
+                </div>
+            </div>
+    <!-- 11th Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Cup-Of-Creamy-Coffee-500x375.png?v=1696517655179" alt="COFFEE">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>COFFEE</h5>
+                        <h5 class="price">15/-</h5>
+                    </div>
+                    <button id="p2" onclick="addToCart('COFFEE', 15)">Add To Cart</button>
+                </div>
+            </div>
+        <!-- 12th Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/pexels-mareefe-1417945.jpg?v=1696517798975" alt="GREEN TEA">
+                <div class="details">
+                    <div class="detail-sub">
+                            <h5>GREEN TEA</h5>
+                            <h5 class="price">15/-</h5>
+                    </div>
+                        <button id="p2" onclick="addToCart('GREEN TEA', 15)">Add To Cart</button>
+                </div>
+            </div>
+        <!-- 13th Item -->
+                <div class="biri">
+                    <img src="https://www.alphafoodie.com/wp-content/uploads/2022/03/Strawberry-Milk-Recipe-square.jpeg" alt="STRAWBERRY SHAKE">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>STRAWBERRY SHAKE</h5>
+                            <h5 class="price">60/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('STRAWBERRY SHAKE', 60)">Add To Cart</button>
+                    </div>
+                </div>
+        
+        <!-- 14 Item -->
+                <div class="biri">
+                    <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Vanilla%20Milkshake.jpg?v=1696519267345" alt="VANILLA SHAKE">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>VANILLA SHAKE</h5>
+                            <h5 class="price">60/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('VANILLA SHAKE', 60)">Add To Cart</button>
+                    </div>
+                </div>
+        <!--15 Item -->
+                <div class="biri">
+                    <img src="https://saltandbaker.com/wp-content/uploads/2022/05/square-biscoff-milkshake-photo.jpg" alt="CHOCOLATE SHAKE">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>CHOCOLATE SHAKE</h5>
+                            <h5 class="price">60/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('CHOCOLATE SHAKE', 60)">Add To Cart</button>
+                    </div>
+                </div>
+        <!--16 Item -->
+        <div class="biri">
+    
+            <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/rose-milk-recipe-3.jpg?v=1696518874454" alt="ROSE MILK">
+            <div class="details">
+                <div class="detail-sub">
+                    <h5>ROSE MILK</h5>
+                    <h5 class="price">50/-</h5>
+                </div>
+                <button id="p2" onclick="addToCart('ROSE MILK', 50)">Add To Cart</button>
+            </div>
+        </div>
+        </div>
+        </div>
+        </section></div>
+        
+        <!-- Grid layout for items -->
+        
+        <section id="menu">
+        
+            <div class="nvcourse">
+                <h1><center><h3>Amul Ice Creams & Maggie</h3> 🧾MENU🍴</center></h1>
+            <!-- First Item -->
+            <div class="container">
+            <div class="biri">
+                <img src="https://cdn.glitch.global/1d7d96cd-0a81-46e7-9a6b-9073d8aaa37e/63971154.webp?v=1696670173453" alt="VINILLA ICE CREAM">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>VINILLA ICE CREAM</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                    <button id="p2" onclick="addToCart('VINILLA ICE CREAM', 40)">Add To Cart</button>
+                </div>
+            </div>
+            
+           
+        <!-- Second Item -->
+        <div class="biri">
+                <img src="https://cdn.glitch.global/1d7d96cd-0a81-46e7-9a6b-9073d8aaa37e/Chocolate-Ice-Cream_0.jpg?v=1696670256986" alt="CHOCOLATE ICE CREAM">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>CHOCOLATE ICE CREAM</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                    <button id="p2" onclick="addToCart('CHOCOLATE ICE CREAM', 40)">Add To Cart</button>
+                </div>
+        </div>
+    
+        <!-- Third Item -->
+        <div class="biri">
+            <img src="https://cdn.glitch.global/1d7d96cd-0a81-46e7-9a6b-9073d8aaa37e/amul-tri-cone-ice-cream-available-in-all-flavors-pack-of-120ml-2-months-shelf-life-778.jpg?v=1696670298002" alt="AMUL CONE ICE CREAM">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>AMUL CONE ICE CREAM</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                        <button id="p2" onclick="addToCart('AMUL CONE ICE CREAM', 40)">Add To Cart</button>
+                </div>
+        </div>
+    
+        <!-- Fourth Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/1d7d96cd-0a81-46e7-9a6b-9073d8aaa37e/download%20(2).jpeg?v=1696670375695" alt="AMUL MILKSHAKE">
+                <div class="details">
+                    <div class="detail-sub">
+                        <h5>AMUL MILKSHAKE</h5>
+                        <h5 class="price">40/-</h5>
+                    </div>
+                        <button id="p2" onclick="addToCart('AMUL MILKSHAKE', 40)">Add To Cart</button>
+                </div>
+             </div>
+             
+        <!-- Fifth Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/pexels-j-a-n-n-g-u-y-e-n-%F0%9F%8D%81-699953.jpg?v=1696527019617" alt="VEG MAGGIE">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>VEG MAGGIE</h5>
+                            <h5 class="price">50/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('VEG MAGGIE', 50)">Add To Cart</button>
+                    </div>
+            </div>
+    
+    
+        <!-- sixth Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/pexels-j-a-n-n-g-u-y-e-n-%F0%9F%8D%81-2664216.jpg?v=1696531458723" alt="EGG MAGGIE">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>EGG MAGGIE</h5>
+                            <h5 class="price">50/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('EGG MAGGIE', 50)">Add To Cart</button>
+                    </div>
+            </div>
+    
+        <!-- seventh Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/hot-espresso.png?v=1696527067856" alt="NESCAFE COFFEE">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>NESCAFE COFFEE</h5>
+                            <h5 class="price">20/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('NESCAFE COFFEE', 20)">Add To Cart</button>
+                    </div>
+            </div>
+    
+        <!-- Eighth Item -->
+            <div class="biri">
+                <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/iced-espresso.png?v=1696531268829" alt="COLD COFFEE">
+                    <div class="details">
+                        <div class="detail-sub">
+                            <h5>COLD COFFEE</h5>
+                            <h5 class="price">30/-</h5>
+                        </div>
+                        <button id="p2" onclick="addToCart('COLD COFFEE', 30)">Add To Cart</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="cart">
+        
+        <center>
+            <h1>ITEM'S IN CART</h1>
+        </center>
+        <input type="text" id="username" placeholder="Enter your name" required pattern=".{3,}">
+        <input type="text" id="mobilenumber" placeholder="Enter your mobile number" required pattern="[0-9]{10}">
+        <div id="cart-container"
+            <p>Cart is Empty</p>>
+            
+        </div><br>
+        <center><button class="checkout" onclick="clearCart()">Clear Cart</button></center><br>
+        <form onsubmit="return validateForm()">
+        <center><button class="checkout" onclick="checkout()">Checkout</button></center><br>
+        </form>
+
+        </div>
+        </section>
+		
+        <section id="outlets">
+        <div class="outlet">
+            <h5>Outlets</h5>
+            <div class="location">
+                
+                    <div class="omg">
+                        <a href="https://maps.app.goo.gl/ge4U5P1EgwLmbzDKA">  <img src="https://cdn.glitch.global/00e523c4-bffd-43b7-ba18-37017d26b26a/Snapchat-1574084616.jpg?v=1696686188204">LAKE VIEW FOOD COURT</a>
+                    </div>
+                    <div class="omg">
+                        <a href="https://maps.app.goo.gl/f4d7wxnU1kxBcamc8">   <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Snapchat-1542396768.jpg?v=1696514786177">TEA LEAF</a>
+                    </div>
+                    <div class="omg">
+                        <a href="https://goo.gl/maps/JsvFPFC4aA2GkH5F9">  <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Snapchat-90585956.jpg?v=1696514192255"><br>AMUL ICE CREAMS</a>
+                    </div>
+                    <div class="omg">
+                        <a href="https://goo.gl/maps/JsvFPFC4aA2GkH5F9">  <img src="https://cdn.glitch.global/48e3e1ff-bc2c-4059-87f1-68e5d891d88f/Snapchat-1283257034.jpg?v=1696515045920"><br>MAGGIE</a>
+                    </div>
+               </div>
+           </div>
+        </section>
+        <section id="contacts">
+           <div class="con">
+            <h2>CONTACT</h2>
+            <div class="gif">
+            <p><a href=""><img src="https://img.icons8.com/?size=512&amp;id=uLWV5A9vXIPu&amp;format=png" style="height: 40px;width:40px"></a></p>
+                <p><a href=""><img src="https://img.icons8.com/?size=512&amp;id=nj0Uj45LGUYh&amp;format=png" style="height: 40px;width:40px"></a></p>
+                <p><a href=""><img src="https://img.icons8.com/?size=512&amp;id=5MQ0gPAYYx7a&amp;format=png" style="height: 40px;width:40px"></a></p></div>
+            <h4>vishnufoods@gmail.com</h4>
+                   </div>
+           
+        </section>
+        <div class="fixed-bar">
+            <center><button class="view-cart-button" onclick="viewCart()">View Cart</button></center>
+          </div>
+    
+    
+        
+<script>
+
+    function validateForm() {
+    const username = document.getElementById('username').value;
+    const mobileNumber = document.getElementById('mobilenumber').value;
+
+    // Check if the username has at least 3 characters
+    if (username.length < 3) {
+        alert('Username should have at least 3 characters');
+        return false; // Prevent form submission
+    }
+
+    // Check if the mobile number has exactly 10 digits
+    if (!/^\d{10}$/.test(mobileNumber)) {
+        alert('Mobile number should have exactly 10 digits');
+        return false; // Prevent form submission
+    }
+
+    // Continue with form submission if validation passes
+    return false;
+}
+
+// Function to handle the checkout
+function checkout() {
+    // First, validate the form
+    if (validateForm()) {
+        // Proceed with order placement logic here
+        alert('Order placed successfully');
+        clearCart()
+    } else {
+        // Validation failed, do not place the order
+        alert('Order failed. Please check your details.');
+    }
+}
+
+    const cartItems = [];
+    var count = 1;
+
+    function addToCart(itemName, price) {
+        cartItems.push({ name: itemName, price: price });
+        alert(itemName + " ADDED TO CART");
+        document.getElementById('cartsymbol').innerHTML = "🛒" + count++;
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartContainer = document.getElementById('cart-container');
+        cartContainer.innerHTML = '';
+
+        let totalAmount = 0;
+
+        cartItems.forEach(item => {
+            totalAmount += item.price;
+            cartContainer.innerHTML += `<div class="cart-item">
+                                            <span>${item.name}</span>
+                                            <span class="cart-price"> ${item.price}/-</span>
+                                        </div>`;
+        });
+
+        cartContainer.innerHTML += `<div class="cart-item cart-total">
+                                        <span>Total:</span>
+                                        <span class="cart-price">${totalAmount}/-</span>
+                                    </div>`;
+    }
+
+    function clearCart() {
+        cartItems.length = 0;
+        updateCart();
+    }
+
+    function checkout() {
+        const username = document.getElementById('username').value;
+        const mobilenumber = document.getElementById('mobilenumber').value;
+        const totalAmount = calculateTotalAmount();
+
+        if (username.trim() === '' || mobilenumber.trim() === '') {
+                alert("Please enter your name and mobile number before checking out.");
+                return;
+        }
+
+        if (totalAmount > 0) {
+            // Reference to the 'orders' node in your database
+            const ordersRef = database.ref('orders');
+
+            // Push the cart items and total amount to the database
+            const newOrderKey = ordersRef.push().key;
+
+            const orderData = {
+                username: username,
+                mobilenumber: mobilenumber,
+                cartItems: cartItems,
+                totalAmount: totalAmount
+            };
+
+            const updates = {};
+            updates[newOrderKey] = orderData;
+
+            ordersRef.update(updates);
+
+            alert("Order placed successfully!");
+            clearCart();
+        } else {
+            alert("Your cart is empty. Add items to the cart before checking out.");
+        }
+    }
+    function viewCart() {
+  if (cartItems.length > 0) {
+    let cartInfo = "Items in Cart:\n";
+    cartItems.forEach(item => {
+      cartInfo += `${item.name} - ${item.price}/-\n`;
+    });
+    alert(cartInfo);
+  } else {
+    alert("Your cart is empty.");
+  }
+}
+
+    function calculateTotalAmount() {
+        let totalAmount = 0;
+        cartItems.forEach(item => {
+            totalAmount += item.price;
+        });
+        return totalAmount;
+    }
+
+    // Function to fetch and display cart items from the database
+    function displayCartItems() {
+        const ordersRef = database.ref('orders');
+
+        // Listen for changes to the 'orders' node
+        ordersRef.on('value', (snapshot) => {
+            const orders = snapshot.val();
+
+            // Clear the current cart display
+            const cartContainer = document.getElementById('cart-container');
+            cartContainer.innerHTML = '';
+
+            // Display each order's cart items
+            for (const orderKey in orders) {
+                const order = orders[orderKey];
+                const cartItems = order.cartItems;
+
+                // Display cart items for this order
+                cartItems.forEach(item => {
+                    cartContainer.innerHTML += `<div class="cart-item">
+                                                    <span>${item.name}</span>
+                                                    <span class="cart-price">${item.price}/-</span>
+                                                </div>`;
+                });
+            }
+        });
+    }
+
+    // Call the displayCartItems() function to initially display cart items
+    displayCartItems();
+
+    </script>
+    
+    </body>
+</body>
+
+</html>

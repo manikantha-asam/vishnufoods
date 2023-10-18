@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders</title>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #333; /* Reference website's header background color */
+            color: #fff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #333; /* Reference website's text color */
+        }
+
+        p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding: 5px 0;
+        }
+
+        .cart-price {
+            font-weight: bold;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Style for the "Clear" button */
+        .clear-button {
+            background-color: #ff5252; /* Red color for the button background */
+            color: #fff; /* White text color */
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        /* Hover effect for the "Clear" button */
+        .clear-button:hover {
+            background-color: #ff0000; /* Darker red color on hover */
+        }
+
+        form {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #333; /* Reference website's button background color */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #222; /* Darker color on hover */
+        }
+
+        #orderHistory {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ORDER'S</h1>
+    <div class="container">
+        <form id="orderHistoryForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required><br>
+
+            <label for="mobilenumber">Mobile Number:</label>
+            <input type="text" id="mobilenumber" name="mobilenumber" required><br>
+
+            <button type="button" id="submitButton">Submit</button>
+        </form>
+
+        <div id="orderHistory"></div>
+    </div>
+
+    <script>
+        // Initialize Firebase with your Firebase project configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaEioKIct6de9ZzMizgko9aBKkZ6rhuD0",
+            authDomain: "vishnufoods-56927.firebaseapp.com",
+            databaseURL: "https://vishnufoods-56927-default-rtdb.firebaseio.com/",
+            projectId: "vishnufoods-56927",
+            storageBucket: "vishnufoods-56927.appspot.com",
+            messagingSenderId: "101284934777",
+            appId: "1:1012849347774:web:6c45e2e294c97c8f6c22ef"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Function to fetch and display order history from the database
+        function getOrderHistoryFromDatabase(username, mobileNumber) {
+            const database = firebase.database();
+            const ordersRef = database.ref('orders');
+
+            ordersRef.orderByChild("username").equalTo(username).once("value")
+                .then((snapshot) => {
+                    const orderHistory = snapshot.val();
+                    const orderHistoryContainer = document.getElementById('orderHistory');
+
+                    if (orderHistory) {
+                        let orderHistoryHTML = "<h2>Your Order History:</h2><ul>";
+
+                        for (const orderId in orderHistory) {
+                            const order = orderHistory[orderId];
+                            if (order.mobilenumber === mobileNumber) {
+                                orderHistoryHTML += `<li>Order ID: ${orderId}</li>`;
+                                orderHistoryHTML += `<li>Username: ${order.username}</li>`;
+                                orderHistoryHTML += `<li>Mobile Number: ${order.mobilenumber}</li>`;
+
+                                orderHistoryHTML += "<li>Ordered Items:</li><ul>";
+                                for (const cartItemId in order.cartItems) {
+                                    const cartItem = order.cartItems[cartItemId];
+                                    orderHistoryHTML += `<li style="font-weight: bold;">${cartItem.name} - ${cartItem.price}</li>`;
+                                }
+                                orderHistoryHTML += "</ul>";
+
+                                orderHistoryHTML += `<li class="total-amount" style="color: red;">Total Amount: ${order.totalAmount}</li>`;
+                                orderHistoryHTML += "<hr>";
+                            }
+                        }
+
+                        orderHistoryHTML += "</ul>";
+                        orderHistoryContainer.innerHTML = orderHistoryHTML;
+                    } else {
+                        orderHistoryContainer.innerHTML = "No orders found for this user.";
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching order history: " + error.message);
+                });
+        }
+
+        // Add an event listener to the Submit button
+        document.getElementById("submitButton").addEventListener("click", () => {
+            const username = document.getElementById("username").value;
+            const mobileNumber = document.getElementById("mobilenumber").value;
+
+            // Fetch and display order history
+            getOrderHistoryFromDatabase(username, mobileNumber);
+        });
+    </script>
+</body>
+</html>

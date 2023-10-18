@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORDERS</title>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        #cart-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding: 5px 0;
+        }
+
+        .cart-price {
+            font-weight: bold;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Style for the "Clear" button */
+        .clear-button {
+            background-color: #ff5252; /* Red color for the button background */
+            color: #fff; /* White text color */
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+
+        /* Hover effect for the "Clear" button */
+        .clear-button:hover {
+            background-color: #ff0000; /* Darker red color on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1>ORDER'S</h1>
+    <div id="cart-container">
+        <!-- Cart items will be displayed here -->
+    </div>
+
+    <script>
+        // Initialize Firebase with your Firebase project configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaEioKIct6de9ZzMizgko9aBKkZ6rhuD0",
+            authDomain: "vishnufoods-56927.firebaseapp.com",
+            databaseURL: "https://vishnufoods-56927-default-rtdb.firebaseio.com/",
+            projectId: "vishnufoods-56927",
+            storageBucket: "vishnufoods-56927.appspot.com",
+            messagingSenderId: "101284934777",
+            appId: "1:1012849347774:web:6c45e2e294c97c8f6c22ef"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+
+        // Function to remove an order from the database
+        function removeOrder(orderKey) {
+            const orderRef = database.ref(`orders/${orderKey}`);
+
+            orderRef.remove()
+                .then(() => {
+                    // Order removed successfully, re-display cart items
+                    displayCartItems();
+                })
+                .catch((error) => {
+                    console.error("Error removing order: ", error);
+                });
+        }
+
+        // Function to fetch and display cart items from the database
+        function displayCartItems() {
+            const ordersRef = database.ref('orders');
+
+            // Query the 'orders' node to order by key in reverse chronological order and limit the results
+            ordersRef.orderByKey().limitToLast(20).on('value', (snapshot) => {
+                const orders = snapshot.val();
+
+                // Clear the current cart display
+                const cartContainer = document.getElementById('cart-container');
+                cartContainer.innerHTML = '';
+
+                // Convert the orders object to an array and reverse it to display the most recent order first
+                const ordersArray = Object.entries(orders).reverse();
+
+                // Loop through each order
+                for (const [orderKey, order] of ordersArray) {
+                    // Display order key
+                    cartContainer.innerHTML += `<h2>ORDER ID: ${orderKey}</h2>`;
+
+                    // Display username and mobile number
+                    cartContainer.innerHTML += `
+                        <p>Username: ${order.username}</p>
+                        <p>Mobile Number: ${order.mobilenumber}</p>`;
+
+                    // Loop through each cart item within the order
+                    for (const cartItemKey in order.cartItems) {
+                        const cartItem = order.cartItems[cartItemKey];
+
+                        // Display cart item
+                        cartContainer.innerHTML += `
+                            <div class="cart-item">
+                                <span style="font-weight: bold;">${cartItem.name}</span>
+                                <span class="cart-price">${cartItem.price}/-</span>
+                            </div>`;
+                    }
+
+                    // Display total amount and add a clear button
+                    cartContainer.innerHTML += `
+                        <p>Total Amount: <span style="font-weight: bold; color: red;">${order.totalAmount}</span></p>
+                        <button class="clear-button" onclick="removeOrder('${orderKey}')">Clear</button>`;
+
+                }
+            });
+        }
+
+        // Call the displayCartItems() function to initially display cart items
+        displayCartItems();
+    </script>
+</body>
+</html>
