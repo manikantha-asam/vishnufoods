@@ -35,8 +35,8 @@ Feel free to submit issues, fork the repository, and send pull requests. We welc
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/yourusername/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/manikantha-asam/vishnufoods.git
+    cd vishnufoods
     ```
 
 2. **Install dependencies:**
