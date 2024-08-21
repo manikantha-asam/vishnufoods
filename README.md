@@ -15,7 +15,12 @@ This project is a web application built using **Node.js**, **Express.js**, and *
 Check out the project demo on [YouTube](https://www.youtube.com/watch?v=lEgfomXbObo).
 
 ## Screenshots
+ **HOMEPAGE**
+ ![image](https://github.com/user-attachments/assets/701a4e9e-40eb-40af-a8d2-f5b9a6b378e2)
 
+ 
+
+**MENU**
 ![image](https://github.com/user-attachments/assets/6fd2a06a-bdab-4aa3-828f-407dcb8cc092)
 
 
