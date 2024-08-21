@@ -16,7 +16,8 @@ Check out the project demo on [YouTube](https://www.youtube.com/watch?v=lEgfomXb
 
 ## Screenshots
 
-![Project Screenshot](https://github.com/user-attachments/assets/ebe96ce5-dcd9-40e7-9879-5630019045b8)
+![image](https://github.com/user-attachments/assets/6fd2a06a-bdab-4aa3-828f-407dcb8cc092)
+
 
 ## Contributing
 
